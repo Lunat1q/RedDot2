@@ -1,0 +1,16 @@
+﻿<Window x:Class="RD2.Crosshair"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RD2"
+        mc:Ignorable="d" IsHitTestVisible="False"
+        AllowsTransparency="True"
+        ResizeMode ="NoResize"
+        WindowState="Maximized"
+        BorderBrush="Black"
+        Title="Crosshair" Height="40" Width="40" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+    <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-10,-10,0,0">
+        <Ellipse Width="10" Height="10" Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    </Canvas>
+</Window>
