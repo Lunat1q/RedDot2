@@ -1,0 +1,6 @@
+[submodule "TiqUtils.Wpf"]
+	path = TiqUtils.Wpf
+	url = https://github.com/Lunat1q/TiqUtils.Wpf
+[submodule "TiqUtils"]
+	path = TiqUtils
+	url = https://github.com/Lunat1q/TiqUtils

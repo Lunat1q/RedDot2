@@ -27,6 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>crosshair.ico</ApplicationIcon>
@@ -147,11 +149,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\GitHub\TiqUtils.Wpf\TiqUtils.Wpf\TiqUtils.Wpf.csproj">
+    <ProjectReference Include="..\TiqUtils.Wpf\TiqUtils.Wpf\TiqUtils.Wpf.csproj">
       <Project>{B03903AE-CB73-4DAB-91D8-439F4AAD4806}</Project>
       <Name>TiqUtils.Wpf</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\GitHub\TiqUtils\TiqUtils\TiqUtils.csproj">
+    <ProjectReference Include="..\TiqUtils\TiqUtils\TiqUtils.csproj">
       <Project>{2CBA14C8-CE3C-4198-8F24-FEDEFBE7F75A}</Project>
       <Name>TiqUtils</Name>
     </ProjectReference>
