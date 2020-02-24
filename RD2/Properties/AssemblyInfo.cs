@@ -8,7 +8,7 @@ using System.Windows;
 [assembly: AssemblyTitle("RD2")]
 [assembly: AssemblyDescription("Red Dot Redemption")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("TiqWorkshop")]
+[assembly: AssemblyCompany("TiqSoftware")]
 [assembly: AssemblyProduct("RD2")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("TiqWorkshop")]
