@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using RD2.Properties;
 using TiqUtils.Serialize;
@@ -23,7 +24,16 @@ namespace RD2
         {
             var vm = Settings.Default.UserSettings.DeserializeDataFromString<CrosshairControlViewModel>() ?? new CrosshairControlViewModel();
             vm.Started = false;
+            vm.PropertyChanged += VmOnPropertyChanged;
             return vm;
+        }
+
+        private void VmOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (this._vm.Started)
+            {
+                this._activeCrosshair?.DrawCrosshair(this._vm.Type, this._vm.Size, this._vm.SelectedColor);
+            }
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)

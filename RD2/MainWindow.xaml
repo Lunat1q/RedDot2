@@ -34,13 +34,6 @@
                           ItemsSource="{Binding Type, Converter={StaticResource EnumToCollectionConverter}}"
                 />
             </Grid>
-            <Grid Margin="5"  >
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Button Content="Draw" Margin="5" Click="Draw_Click" IsEnabled="{Binding Started}"/>
-            </Grid>
         </StackPanel>
         <StackPanel Grid.Column="1" VerticalAlignment="Center"  >
             <Grid Margin="5">
