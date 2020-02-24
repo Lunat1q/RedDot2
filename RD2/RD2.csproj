@@ -84,22 +84,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CrosshairControlViewModel.cs" />
-    <Compile Include="CrossHairSize.cs" />
-    <Compile Include="CrossHairSizeType.cs" />
+    <Compile Include="ViewModel\CrossHairType.cs" />
+    <Compile Include="ViewModel\CrosshairControlViewModel.cs" />
+    <Compile Include="ViewModel\CrossHairSize.cs" />
+    <Compile Include="ViewModel\CrossHairSizeType.cs" />
     <Compile Include="Crosshairs\BaseShapesContainer.cs" />
     <Compile Include="Crosshairs\Cross.cs" />
     <Compile Include="Crosshairs\Dot.cs" />
     <Compile Include="Crosshairs\ICrosshair.cs" />
     <Compile Include="Crosshairs\Rangefinder.cs" />
     <Compile Include="Crosshairs\XCross.cs" />
-    <Compile Include="DpiHelper.cs" />
-    <Compile Include="InverseBooleanConverter.cs" />
-    <Compile Include="ProcessDpiAwareness.cs" />
+    <Compile Include="WinApi\DpiHelper.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Helpers\ProcessDpiAwareness.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ScreenInfo.cs" />
-    <Compile Include="User32.cs" />
-    <Compile Include="WindowsServices.cs" />
+    <Compile Include="Helpers\ScreenInfo.cs" />
+    <Compile Include="WinApi\User32.cs" />
+    <Compile Include="WinApi\WindowsServices.cs" />
     <Page Include="Crosshair.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -160,6 +161,7 @@
   <ItemGroup>
     <Resource Include="crosshair.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.0.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.0.0\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using RD2.ViewModel;
 
 namespace RD2.Crosshairs
 {
@@ -28,14 +29,16 @@ namespace RD2.Crosshairs
 
             this.Shapes.Add(line);
 
-            var verticalLine = new Line();
-            verticalLine.Stroke = colorBrush;
-            verticalLine.StrokeThickness = size.Height / 5d;
+            var verticalLine = new Line
+            {
+                Stroke = colorBrush,
+                StrokeThickness = size.Height / 5d,
+                X1 = 0,
+                X2 = size.Width,
+                Y1 = size.Height,
+                Y2 = 0
+            };
 
-            verticalLine.X1 = 0;
-            verticalLine.X2 = size.Width;
-            verticalLine.Y1 = size.Height;
-            verticalLine.Y2 = 0;
             this.Shapes.Add(verticalLine);
         }
     }

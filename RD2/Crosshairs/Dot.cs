@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using RD2.ViewModel;
 
 namespace RD2.Crosshairs
 {

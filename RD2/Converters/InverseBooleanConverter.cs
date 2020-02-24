@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace RD2
+namespace RD2.Converters
 {
     [ValueConversion(typeof(bool), typeof(bool))]
     public class InverseBooleanConverter : IValueConverter

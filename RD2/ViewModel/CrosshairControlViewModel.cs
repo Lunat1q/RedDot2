@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
-using RD2.Annotations;
+using RD2.Properties;
 
-namespace RD2
+namespace RD2.ViewModel
 {
     public class CrosshairControlViewModel : INotifyPropertyChanged
     {
@@ -12,11 +12,7 @@ namespace RD2
         private Color _selectedColor = Colors.Red;
         private bool _started;
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public CrosshairControlViewModel()
-        {
-        }
-
+        
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

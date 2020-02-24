@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace RD2
+namespace RD2.WinApi
 {
     internal class User32
     {

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using RD2.Properties;
+using RD2.ViewModel;
 using TiqUtils.Serialize;
 
 namespace RD2
@@ -24,7 +25,7 @@ namespace RD2
         {
             var vm = Settings.Default.UserSettings.DeserializeDataFromString<CrosshairControlViewModel>() ?? new CrosshairControlViewModel();
             vm.Started = false;
-            vm.PropertyChanged += VmOnPropertyChanged;
+            vm.PropertyChanged += this.VmOnPropertyChanged;
             return vm;
         }
 
@@ -42,9 +43,7 @@ namespace RD2
 
             this._activeCrosshair = new Crosshair();
             this._activeCrosshair.Show();
-
             this._activeCrosshair.Closed += this.ActiveCrosshairOnClosed;
-
             this._activeCrosshair.Topmost = true;
             this._vm.Started = true;
             this._activeCrosshair.DrawCrosshair(this._vm.Type, this._vm.Size, this._vm.SelectedColor);
@@ -60,11 +59,6 @@ namespace RD2
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
             this._activeCrosshair?.Close();
-        }
-
-        private void Draw_Click(object sender, RoutedEventArgs e)
-        {
-            this._activeCrosshair.DrawCrosshair(this._vm.Type, this._vm.Size, this._vm.SelectedColor);
         }
         
         private void Window_StateChanged(object sender, EventArgs e)
@@ -88,7 +82,7 @@ namespace RD2
             this.Close();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             Settings.Default.UserSettings = this._vm.SerializeDataToString();
             Settings.Default.Save();

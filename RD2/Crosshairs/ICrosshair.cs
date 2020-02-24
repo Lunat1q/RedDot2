@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using RD2.ViewModel;
 
 namespace RD2.Crosshairs
 {

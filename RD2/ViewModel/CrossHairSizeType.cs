@@ -1,4 +1,4 @@
-﻿namespace RD2
+﻿namespace RD2.ViewModel
 {
     public enum CrossHairSizeType
     {

@@ -1,4 +1,7 @@
-﻿namespace RD2
+﻿using RD2.ViewModel;
+using RD2.WinApi;
+
+namespace RD2.Helpers
 {
     internal class ScreenInfo
     {

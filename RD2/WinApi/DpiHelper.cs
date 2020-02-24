@@ -1,11 +1,19 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using RD2.Helpers;
 
-namespace RD2
+namespace RD2.WinApi
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "IdentifierTypo")]
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public class DpiHelper
     {
         public const float DefaultDpi = 96;
@@ -17,8 +25,8 @@ namespace RD2
         {
             try
             {
-                IntPtr hmonitor = MonitorFromWindow(hwnd, MonitorFromWindowFlags.DefaultToNearest);
-                if (GetDpiForMonitor(hmonitor, MonitorDpiTypes.EffectiveDPI, out int newDpiX, out int newDpiY) != 0)
+                IntPtr hMonitor = MonitorFromWindow(hwnd, MonitorFromWindowFlags.DefaultToNearest);
+                if (GetDpiForMonitor(hMonitor, MonitorDpiTypes.EffectiveDPI, out int newDpiX, out _) != 0)
                 {
                     return 96;
                 }
@@ -45,9 +53,8 @@ namespace RD2
 
         public static int GetSystemDpi()
         {
-            int newDpiX = 0;
-            IntPtr dc = GetDC(IntPtr.Zero);
-            newDpiX = GetDeviceCaps(dc, LOGPIXELSX);
+            var dc = GetDC(IntPtr.Zero);
+            var newDpiX = GetDeviceCaps(dc, LOGPIXELSX);
             ReleaseDC(IntPtr.Zero, dc);
             return newDpiX;
         }
@@ -66,6 +73,7 @@ namespace RD2
         public static IntPtr GetMonitorFromWindow(Window wnd)
         {
             var source = (HwndSource)PresentationSource.FromVisual(wnd);
+            Debug.Assert(source != null, nameof(source) + " != null");
             return MonitorFromWindow(source.Handle, MonitorFromWindowFlags.DefaultToNearest);
         }
 

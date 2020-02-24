@@ -7,6 +7,9 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using RD2.Crosshairs;
+using RD2.Helpers;
+using RD2.ViewModel;
+using RD2.WinApi;
 
 namespace RD2
 {
@@ -15,8 +18,7 @@ namespace RD2
     /// </summary>
     public partial class Crosshair
     {
-
-        private List<Shape> shapes = new List<Shape>(10);
+        private readonly List<Shape> _shapes = new List<Shape>(17);
         public Crosshair()
         {
             this.InitializeComponent();
@@ -49,7 +51,7 @@ namespace RD2
         private void Clean()
         {
             this.CrosshairCanvas.Children.Clear();
-            this.shapes.Clear();
+            this._shapes.Clear();
         }
 
         public void DrawCrosshair(CrossHairType type, CrossHairSizeType size, Color color)
@@ -60,18 +62,18 @@ namespace RD2
             switch (type)
             {
                 case CrossHairType.Dot:
-                    crosshair = new Dot(this.shapes);
+                    crosshair = new Dot(this._shapes);
                     break;
                 case CrossHairType.Cross:
-                    crosshair = new Cross(this.shapes);
+                    crosshair = new Cross(this._shapes);
                     break;
                 case CrossHairType.XCross:
-                    crosshair = new XCross(this.shapes);
+                    crosshair = new XCross(this._shapes);
                     break;
                 case CrossHairType.RangeFinder:
                     pixelSize.Height *= 8;
                     pixelSize.Width *= 2;
-                    crosshair = new Rangefinder(this.shapes);
+                    crosshair = new Rangefinder(this._shapes);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -118,19 +120,11 @@ namespace RD2
         
         private void ProcessShapes()
         {
-            foreach (var shape in this.shapes)
+            foreach (var shape in this._shapes)
             {
                 shape.IsHitTestVisible = false;
                 this.CrosshairCanvas.Children.Add(shape);
             }
         }
-    }
-
-    public enum CrossHairType
-    {
-        Dot,
-        Cross,
-        XCross,
-        RangeFinder
     }
 }
