@@ -11,6 +11,7 @@ namespace RD2.ViewModel
         private CrossHairType _type = CrossHairType.Dot;
         private Color _selectedColor = Colors.Red;
         private bool _started;
+        private bool _autoStartAndMinimize;
         public event PropertyChangedEventHandler PropertyChanged;
         
         [NotifyPropertyChangedInvocator]
@@ -51,7 +52,18 @@ namespace RD2.ViewModel
                 this.OnPropertyChanged();
             }
         }
-        
+
+        public bool AutoStartAndMinimize
+        {
+            get => this._autoStartAndMinimize;
+            set
+            {
+                if (value == this._autoStartAndMinimize) return;
+                this._autoStartAndMinimize = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         public bool Started
         {
             get => this._started;

@@ -13,13 +13,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel  >
-            <Grid Margin="5"  >
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
+        <StackPanel Margin="5" >
                 <xctk:ColorPicker SelectedColor="{Binding SelectedColor}" Margin="5"/>
                 <ComboBox Grid.Row="1" Margin="5" 
                           DisplayMemberPath="Description"
@@ -33,7 +27,7 @@
                           SelectedItem="{Binding Type, Converter={StaticResource EnumValueConverter}}" 
                           ItemsSource="{Binding Type, Converter={StaticResource EnumToCollectionConverter}}"
                 />
-            </Grid>
+                <CheckBox Margin="5" Content="Auto-start and minimize" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding AutoStartAndMinimize}"/>
         </StackPanel>
         <StackPanel Grid.Column="1" VerticalAlignment="Center"  >
             <Grid Margin="5">

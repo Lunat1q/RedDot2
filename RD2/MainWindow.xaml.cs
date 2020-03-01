@@ -18,6 +18,11 @@ namespace RD2
         {
             this.InitializeComponent();
             this._vm = this.GetPreviousViewModel();
+            if (this._vm.AutoStartAndMinimize)
+            {
+                this.Start_Click(null, null);
+                this.Minimize();
+            }
             this.DataContext = this._vm;
         }
 
@@ -65,9 +70,14 @@ namespace RD2
         {
             if (this.WindowState == WindowState.Minimized)
             {
-                this.Hide();
-                this.BarIcon.Visibility = Visibility.Visible;
+                this.Minimize();
             }
+        }
+
+        private void Minimize()
+        {
+            this.Hide();
+            this.BarIcon.Visibility = Visibility.Visible;
         }
 
         private void ShowWindow(object sender, RoutedEventArgs e)
