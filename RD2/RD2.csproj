@@ -84,6 +84,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BooleanToNameConverter.cs" />
+    <Compile Include="Helpers\SizingHelper.cs" />
+    <Compile Include="ViewModel\CrossHairSettings.cs" />
     <Compile Include="ViewModel\CrossHairType.cs" />
     <Compile Include="ViewModel\CrosshairControlViewModel.cs" />
     <Compile Include="ViewModel\CrossHairSize.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Crosshairs\ICrosshair.cs" />
     <Compile Include="Crosshairs\Rangefinder.cs" />
     <Compile Include="Crosshairs\XCross.cs" />
+    <Compile Include="ViewModel\UIProcess.cs" />
     <Compile Include="WinApi\DpiHelper.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Helpers\ProcessDpiAwareness.cs" />

@@ -7,9 +7,10 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d" ResizeMode="CanMinimize" SizeToContent="Height" Topmost="True"
-        Title="Red Dot 2 Sensor" Width="400" StateChanged="Window_StateChanged" Closing="Window_Closing">
+        Title="Red Dot 2 Sensor" Width="600" StateChanged="Window_StateChanged" Closing="Window_Closing">
     <Grid  >
         <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -29,7 +30,17 @@
                 />
                 <CheckBox Margin="5" Content="Auto-start and minimize" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding AutoStartAndMinimize}"/>
         </StackPanel>
-        <StackPanel Grid.Column="1" VerticalAlignment="Center"  >
+        <StackPanel Grid.Column="1" Margin="5" VerticalAlignment="Center" >
+            <ComboBox Margin="5" 
+                      DisplayMemberPath="Title"
+                      SelectedValuePath="Name"
+                      SelectedItem="{Binding SelectedProcess}" 
+                      ItemsSource="{Binding UIProcesses}"
+            />
+            <Button MinHeight="30" Content="Refresh" Margin="5" Click="RefreshProcess_Click" IsEnabled="{Binding Started, Converter={StaticResource InverseBooleanConverter}}"/>
+            <Button MinHeight="30" Content="{Binding BoundToProcess, Converter={StaticResource BooleanToNameConverter}, ConverterParameter=Unbind|Bind}" Margin="5" Click="BindToProcess_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="5" VerticalAlignment="Center" >
             <Grid Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition/>

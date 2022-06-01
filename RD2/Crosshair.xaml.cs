@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,11 +17,14 @@ using RD2.WinApi;
 namespace RD2
 {
     /// <summary>
-    /// Interaction logic for Crosshair.xaml
+    ///     Interaction logic for Crosshair.xaml
     /// </summary>
     public partial class Crosshair
     {
         private readonly List<Shape> _shapes = new List<Shape>(17);
+        private bool bound;
+        private UIProcess processToBind;
+
         public Crosshair()
         {
             this.InitializeComponent();
@@ -27,9 +33,11 @@ namespace RD2
             this.CrosshairCanvas.Cursor = Cursors.None;
         }
 
+        public Canvas CrosshairCanvas { get; set; }
+
         private void InitCanvas()
         {
-            SolidColorBrush transparentBrush = new SolidColorBrush
+            var transparentBrush = new SolidColorBrush
             {
                 Color = Color.FromArgb(0, 0, 0, 0)
             };
@@ -37,16 +45,13 @@ namespace RD2
             var canvas = new Canvas
             {
                 Background = transparentBrush,
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                IsHitTestVisible = false
+                IsHitTestVisible = false,
+                Margin = new Thickness(0, 0, 0, 0)
             };
 
             this.Content = canvas;
             this.CrosshairCanvas = canvas;
         }
-
-        public Canvas CrosshairCanvas { get; set; }
 
         private void Clean()
         {
@@ -57,7 +62,7 @@ namespace RD2
         public void DrawCrosshair(CrossHairType type, CrossHairSizeType size, Color color)
         {
             this.Clean();
-            var pixelSize = this.GetSize(size);
+            var pixelSize = SizingHelper.GetSize(size);
             ICrosshair crosshair;
             switch (type)
             {
@@ -71,44 +76,27 @@ namespace RD2
                     crosshair = new XCross(this._shapes);
                     break;
                 case CrossHairType.RangeFinder:
-                    pixelSize.Height *= 8;
-                    pixelSize.Width *= 2;
+                    pixelSize.Height *= Rangefinder.HeightFactor;
+                    pixelSize.Width *= Rangefinder.WidthFactor;
                     crosshair = new Rangefinder(this._shapes);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
-            this.AdjustSize(pixelSize, 2, crosshair.AdjustOnlyLeft);
+
+            this.AdjustSize(pixelSize, crosshair);
             crosshair.Draw(pixelSize, color);
             this.ProcessShapes();
         }
-        
-        private void AdjustSize(CrossHairSize pixelSize, double multiplier, bool leftOnly = false)
-        {
-            this.Width = pixelSize.Width * multiplier;
-            this.Height = pixelSize.Height * multiplier;
-            var coords = ScreenInfo.GetCenterOfCoordinates(pixelSize, leftOnly);
-            this.Top = coords.Top;
-            this.Left = coords.Left;
 
-            this.CrosshairCanvas.Margin = new Thickness(-1d * pixelSize.Width, leftOnly ? 0 : - 1d * pixelSize.Height, 0, 0);
-        }
-
-        private CrossHairSize GetSize(CrossHairSizeType size)
+        private void AdjustSize(CrossHairSize pixelSize, ICrosshair crosshair)
         {
-            switch (size)
-            {
-                case CrossHairSizeType.Small:
-                    return new CrossHairSize(5, 5);
-                case CrossHairSizeType.Normal:
-                    return new CrossHairSize(10, 10);
-                case CrossHairSizeType.Big:
-                    return new CrossHairSize(20, 20);
-                case CrossHairSizeType.Huge:
-                    return new CrossHairSize(40, 40);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(size), size, null);
-            }
+            this.CrosshairCanvas.Margin = crosshair.GetPadding(pixelSize);
+            this.Width = pixelSize.Width + this.CrosshairCanvas.Margin.Left + this.CrosshairCanvas.Margin.Right;
+            this.Height = pixelSize.Height + this.CrosshairCanvas.Margin.Top + this.CrosshairCanvas.Margin.Bottom;
+            var coords = ScreenInfo.GetMonitorCenterLocation();
+            this.Top = coords.Top - (crosshair.AdjustOnlyLeft ? 0 : this.Height / 2) - this.CrosshairCanvas.Margin.Top;
+            this.Left = coords.Left - this.CrosshairCanvas.Margin.Left - this.Width / 2;
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -117,7 +105,7 @@ namespace RD2
             var hwHandle = new WindowInteropHelper(this).Handle;
             WindowsServices.SetWindowExTransparent(hwHandle);
         }
-        
+
         private void ProcessShapes()
         {
             foreach (var shape in this._shapes)
@@ -126,5 +114,48 @@ namespace RD2
                 this.CrosshairCanvas.Children.Add(shape);
             }
         }
+
+        public void BindToProcess(UIProcess selectedProcessToBindTo)
+        {
+            if (selectedProcessToBindTo == null)
+            {
+                return;
+            }
+
+            this.processToBind = selectedProcessToBindTo;
+            this.bound = true;
+            Action boundCheck = this.BoundCheck;
+            this.Dispatcher.InvokeAsync(boundCheck);
+        }
+
+        private async void BoundCheck()
+        {
+            var currentProcess = Process.GetCurrentProcess();
+            var thisProcessHandle = currentProcess.MainWindowHandle;
+            while (this.bound)
+            {
+                var activatedHandle = GetForegroundWindow();
+
+                if (activatedHandle != this.processToBind.WindowHandle && activatedHandle != thisProcessHandle)
+                {
+                    this.Hide();
+                }
+                else
+                {
+                    this.Show();
+                }
+
+                await Task.Delay(500);
+            }
+        }
+
+        public void UnbindFromProcess()
+        {
+            this.bound = false;
+        }
+
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern IntPtr GetForegroundWindow();
     }
 }

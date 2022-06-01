@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using RD2.ViewModel;
@@ -12,6 +13,7 @@ namespace RD2.Crosshairs
         }
         public bool AdjustOnlyLeft { get; } = false;
 
+        public Thickness GetPadding(CrossHairSize size) => new Thickness(0, 0, 0, 0);
         public void Draw(CrossHairSize size, Color color)
         {
             var line = new Line();
@@ -20,7 +22,7 @@ namespace RD2.Crosshairs
                 Color = color
             };
             line.Stroke = colorBrush;
-            line.StrokeThickness = size.Height / 5d;
+            line.StrokeThickness = size.Height / 10d;
 
             line.X1 = 0;
             line.X2 = size.Width;
@@ -32,7 +34,7 @@ namespace RD2.Crosshairs
             var verticalLine = new Line
             {
                 Stroke = colorBrush,
-                StrokeThickness = size.Height / 5d,
+                StrokeThickness = size.Height / 10d,
                 X1 = 0,
                 X2 = size.Width,
                 Y1 = size.Height,

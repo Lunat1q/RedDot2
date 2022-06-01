@@ -6,7 +6,7 @@ namespace RD2.Helpers
     internal class ScreenInfo
     {
         private const double DefaultDpi = 96;
-        public static Location GetCenterOfCoordinates(CrossHairSize size, bool leftOnly = false)
+        public static Location GetMonitorCenterLocation()
         {
             var windowRect = new User32.RECT();
             var desktopId = User32.GetDesktopWindow();
@@ -18,8 +18,8 @@ namespace RD2.Helpers
             var width = windowRect.right - windowRect.left;
 
             return new Location(
-                width * dpiMult / 2 - size.Width * dpiMult / 2,
-                height * dpiMult / 2 - (leftOnly ? 0 : size.Height * dpiMult / 2)
+                width * dpiMult / 2,
+                height * dpiMult / 2
             );
         }
     }

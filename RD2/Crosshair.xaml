@@ -4,13 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RD2"
-        mc:Ignorable="d" IsHitTestVisible="False"
-        AllowsTransparency="True"
-        ResizeMode ="NoResize"
-        WindowState="Maximized"
+        mc:Ignorable="d"
+        IsHitTestVisible="False"
         BorderBrush="Black"
-        Title="Crosshair" Height="40" Width="40" WindowStyle="None" Background="{x:Null}" Foreground="{x:Null}" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
-    <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-10,-10,0,0">
-        <Ellipse Width="10" Height="10" Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-    </Canvas>
+        Title="Crosshair"
+        Height="0"
+        WindowStyle="None"
+        Width="0"
+        Background="{x:Null}"
+        ResizeMode ="NoResize"
+        Foreground="{x:Null}"
+        AllowsTransparency="True"
+        WindowStartupLocation="Manual"
+        ShowInTaskbar="False">
+
+    <!--
+   -->
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 using RD2.ViewModel;
 
 namespace RD2.Crosshairs
@@ -8,5 +9,7 @@ namespace RD2.Crosshairs
         void Draw(CrossHairSize size, Color color);
 
         bool AdjustOnlyLeft { get; }
+
+        Thickness GetPadding(CrossHairSize size);
     }
 }

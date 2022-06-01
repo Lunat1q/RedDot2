@@ -3,12 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RD2"
              xmlns:converters="clr-namespace:TiqUtils.Wpf.Converters;assembly=TiqUtils.Wpf"
+             xmlns:converters1="clr-namespace:RD2.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          <ResourceDictionary>
             <converters:EnumToCollectionConverter x:Key="EnumToCollectionConverter" />
             <converters:EnumValueConverter x:Key="EnumValueConverter" />
             <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters1:BooleanToNameConverter x:Key="BooleanToNameConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

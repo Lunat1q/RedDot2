@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using RD2.ViewModel;
@@ -11,6 +12,7 @@ namespace RD2.Crosshairs
         {
         }
 
+        public Thickness GetPadding(CrossHairSize size) => new Thickness(0, 0, 0, 0);
         public void Draw(CrossHairSize size, Color color)
         {
             Ellipse dot = new Ellipse();
