@@ -35,6 +35,8 @@ namespace RD2
 
         public Canvas CrosshairCanvas { get; set; }
 
+        public event EventHandler NeedRebind;
+
         private void InitCanvas()
         {
             var transparentBrush = new SolidColorBrush
@@ -145,7 +147,14 @@ namespace RD2
                     this.Show();
                 }
 
-                await Task.Delay(500);
+                if (this.processToBind.ProcessObj.HasExited)
+                {
+                    this.OnNeedRebind();
+                }
+                else
+                {
+                    await Task.Delay(500);
+                }
             }
         }
 
@@ -157,5 +166,10 @@ namespace RD2
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         private static extern IntPtr GetForegroundWindow();
+
+        protected virtual void OnNeedRebind()
+        {
+            this.NeedRebind?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

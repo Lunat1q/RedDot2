@@ -137,7 +137,7 @@ namespace RD2.ViewModel
         {
             var processList = Process.GetProcesses();
             this.UIProcesses.Clear();
-
+            this.SelectedProcess = null;
             foreach (var process in processList.Where(proc => proc.MainWindowHandle != IntPtr.Zero))
             {
                 var uiProcess = new UIProcess
@@ -145,7 +145,8 @@ namespace RD2.ViewModel
                     Name = process.ProcessName,
                     PID = process.Id,
                     WindowHandle = process.MainWindowHandle,
-                    Title = string.IsNullOrWhiteSpace(process.MainWindowTitle) ? process.ProcessName : process.MainWindowTitle
+                    Title = string.IsNullOrWhiteSpace(process.MainWindowTitle) ? process.ProcessName : process.MainWindowTitle,
+                    ProcessObj = process
                 };
                 this.UIProcesses.Add(uiProcess);
                 if (process.ProcessName == settings.SelectedProcessName)
@@ -160,16 +161,20 @@ namespace RD2.ViewModel
             this.Size = settings.Size;
             this.Type = settings.Type;
             this.SelectedColor = settings.SelectedColor;
+            this.AutoStartAndMinimize = settings.AutoStartAndMinimize;
+            this.BoundToProcess = settings.BoundToProcess;
         }
 
         public CrossHairSettings GetSettings()
         {
             return new CrossHairSettings
             {
-                SelectedProcessName = this.SelectedProcess.Name,
+                SelectedProcessName = this.SelectedProcess?.Name,
                 Size = this.Size,
                 Type = this.Type,
-                SelectedColor = this.SelectedColor
+                SelectedColor = this.SelectedColor,
+                AutoStartAndMinimize = this.AutoStartAndMinimize,
+                BoundToProcess = this.BoundToProcess
             };
         }
     }

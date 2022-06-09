@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace RD2.ViewModel
 {
@@ -8,5 +9,7 @@ namespace RD2.ViewModel
         public string Name { get; set; }
         public IntPtr WindowHandle { get; set; }
         public string Title { get; set; }
+
+        public Process ProcessObj { get; set; }
     }
 }

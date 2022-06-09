@@ -20,13 +20,17 @@ namespace RD2
         {
             this._vm = this.GetViewModelWithSettingsRestored();
             this.InitializeComponent();
+            this.DataContext = this._vm;
+            this.Activated += this.OnActivated;
+        }
+
+        private void OnActivated(object sender, EventArgs e)
+        {
             if (this._vm.AutoStartAndMinimize)
             {
                 this.Start_Click(null, null);
-                this.Minimize();
+                this.Dispatcher.Invoke(this.Minimize);
             }
-
-            this.DataContext = this._vm;
         }
 
         private CrosshairControlViewModel GetViewModelWithSettingsRestored()
@@ -55,15 +59,18 @@ namespace RD2
                 return;
             }
 
-            this._activeCrosshair = new Crosshair();
-            this._activeCrosshair.Focusable = false;
-            this._activeCrosshair.ShowActivated = false;
+            this._activeCrosshair = new Crosshair
+            {
+                Focusable = false,
+                ShowActivated = false,
+                Owner = this
+            };
             //this._activeCrosshair.WindowState = WindowState.Maximized;
-            this._activeCrosshair.Owner = this;
             this._activeCrosshair.Show();
             this._activeCrosshair.Closed += this.ActiveCrosshairOnClosed;
             this._activeCrosshair.Topmost = true;
             this._vm.Started = true;
+            this._activeCrosshair.NeedRebind += this.ActiveCrosshairOnNeedRebind;
             this._activeCrosshair.DrawCrosshair(this._vm.Type, this._vm.Size, this._vm.SelectedColor);
             if (this._vm.BoundToProcess)
             {
@@ -72,10 +79,21 @@ namespace RD2
 
         }
 
+        private void ActiveCrosshairOnNeedRebind(object sender, EventArgs e)
+        {
+            this._vm.RefreshProcessList(this._settings);
+            if (this._vm.SelectedProcess == null)
+            {
+                this._vm.BoundToProcess = false;
+                this._activeCrosshair.UnbindFromProcess();
+            }
+        }
+
         private void ActiveCrosshairOnClosed(object sender, EventArgs e)
         {
             this._activeCrosshair.UnbindFromProcess();
             this._activeCrosshair.Closed -= this.ActiveCrosshairOnClosed;
+            this._activeCrosshair.NeedRebind -= this.ActiveCrosshairOnNeedRebind;
             this._activeCrosshair = null;
             this._vm.Started = false;
         }
